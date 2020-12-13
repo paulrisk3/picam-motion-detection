@@ -5,8 +5,8 @@ baseline_image=None
 # This status thing just gets bigger and bigger. What's the purpose of keeping track of it outside of the immediate cycle?
 status_list=[None, None]
 # Replace 0 with URL of network camera
-# video=cv2.VideoCapture("http://192.168.1.126:8000/stream.mjpg")
-video=cv2.VideoCapture(0)
+video=cv2.VideoCapture("http://192.168.1.126:8000/stream.mjpg")
+# video=cv2.VideoCapture(0)
 baseline_counter=0
 
 while True:
@@ -21,7 +21,6 @@ while True:
 
     if baseline_counter==1:
         baseline_image=gray_frame
-        # print("Baseline image set! " + str(datetime.datetime.now()))
         continue
 
     delta=cv2.absdiff(baseline_image,gray_frame)
@@ -37,9 +36,7 @@ while True:
     status_list.append(status)
 
     if status_list[-1]==1 and status_list[-2]==0:
-        # print("Motion detected!")
         print("Motion detected at " + str(datetime.datetime.now()))
-        # print(status_list)
 
     # cv2.imshow("gray_frame Frame",gray_frame)
     # cv2.imshow("Delta Frame",delta)
