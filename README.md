@@ -7,7 +7,7 @@ This script will probably run comfortably on a Pi 4 but would likely strain a Pi
 sudo apt install python3-opencv
 
 ### Installation
-git clone https://github.com/paulrisk3/picam-motion_detection.git
+git clone https://github.com/paulrisk3/picam-motion-detection.git
 
 ## Usage
 python3 opencv_server.py `<IP Camera URL>`
