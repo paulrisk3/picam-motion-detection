@@ -9,7 +9,7 @@ while True:
         baseline_image=None
         # This status thing just gets bigger and bigger. What's the purpose of keeping track of it outside of the immediate cycle?
         status_list=[None, None]
-        video=cv2.VideoCapture("http://192.168.1.126:8000/stream.mjpg")
+        video=cv2.VideoCapture(sys.argv[1])
         record_length = 10
         size = (int(video.get(3)), int(video.get(4)))
         baseline_counter=0
