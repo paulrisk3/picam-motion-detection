@@ -46,7 +46,7 @@ while True:
             if status_list[-1]==1 and status_list[-2]==0:
                 now = datetime.datetime.now()
                 print("Motion detected at " + str(now))
-                clip_directory = 'clips/' + now.strftime('%Y') + '/' + now.strftime('%m') + '/' + now.strftime('%d') + '/'
+                clip_directory = 'clips/' + now.strftime('%Y/%m-%B/%d-%A/') 
                 if not os.path.exists(clip_directory):
                     os.makedirs(clip_directory)
                 video_clip = cv2.VideoWriter(clip_directory + now.strftime("%Y-%m-%d_%H-%M-%S") + '.avi', cv2.VideoWriter_fourcc(*'MJPG'), 30, size)
