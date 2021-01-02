@@ -6,8 +6,7 @@
 apt install python3-opencv
 
 ### Installation
-Clone the repo
-* git clone https://github.com/paulrisk3/picam-motion_detection.git
+git clone https://github.com/paulrisk3/picam-motion_detection.git
 
 ## Usage
 python3 opencv_server.py `<IP Camera URL>`
