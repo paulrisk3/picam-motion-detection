@@ -12,6 +12,7 @@ while True:
         video=cv2.VideoCapture(sys.argv[1])
         record_length = 10
         size = (int(video.get(3)), int(video.get(4)))
+        framerate = 30
         baseline_counter=0
 
         while True:
@@ -49,7 +50,7 @@ while True:
                 clip_directory = 'clips/' + now.strftime('%Y/%m-%B/%d-%A/') 
                 if not os.path.exists(clip_directory):
                     os.makedirs(clip_directory)
-                video_clip = cv2.VideoWriter(clip_directory + now.strftime("%Y-%m-%d_%H-%M-%S") + '.avi', cv2.VideoWriter_fourcc(*'MJPG'), 30, size)
+                video_clip = cv2.VideoWriter(clip_directory + now.strftime("%Y-%m-%d_%H-%M-%S") + '.avi', cv2.VideoWriter_fourcc(*'MJPG'), framerate, size)
                 time_end = record_length + time.time()
                 while time.time() < time_end:
                     check, frame = video.read()
