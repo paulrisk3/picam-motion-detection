@@ -21,3 +21,4 @@ python3 opencv_server.py `<IP Camera URL>`
 * Delete footage after defined number of days
 * Add .conf file to register and name cameras
   * save footage by camera and date
+* Add sources in README
