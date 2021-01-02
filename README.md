@@ -12,7 +12,7 @@ git clone https://github.com/paulrisk3/picam-motion_detection.git
 python3 opencv_server.py `<IP Camera URL>`
 
 ### Need an IP Camera?
-[Check this out](https://github.com/paulrisk3/pihomecam)
+Check out my [pihomecam](https://github.com/paulrisk3/pihomecam)
 
 ## To do
 * Auto-detect video framerate - defaults to 30fps
