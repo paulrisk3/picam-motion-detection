@@ -22,3 +22,4 @@ Check out my [pihomecam](https://github.com/paulrisk3/pihomecam)
 * Add .conf file to register and name cameras
   * save footage by camera and date
 * Add sources in README
+* Configure alerts when motion is detected - likely MQTT
