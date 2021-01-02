@@ -17,6 +17,7 @@ Check out my [pihomecam](https://github.com/paulrisk3/pihomecam)
 
 ## To do
 * Auto-detect video framerate - defaults to 30fps
+* Add running timestamp to recording
 * Rebuild motion detection to not require status_list - currently grows larger forever
 * Delete footage after defined number of days
 * Add .conf file to register and name cameras
