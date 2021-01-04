@@ -1,4 +1,5 @@
 # picam-motion-detection
+Motion detection and recording from IP camera using Python and OpenCV
 
 ## Getting Started
 This script will probably run comfortably on a Pi 4 but would likely strain a Pi 3. I've got it running in Ubuntu 20.04 on a dual-core, hyper-threaded i3-2120 @ 3.30GHz with 12GB DDR3 RAM at about 30% CPU utilization and 2 GB of RAM.
