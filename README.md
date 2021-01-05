@@ -4,7 +4,7 @@ Motion detection and recording from IP camera using Python and OpenCV
 ## Getting Started
 This script will probably run comfortably on a Pi 4 but would likely strain a Pi 3. I've got it running in Ubuntu 20.04 on a dual-core, hyper-threaded i3-2120 @ 3.30GHz with 12GB DDR3 RAM at about 30% CPU utilization and 2 GB of RAM.
 
-Update - This does not actually run all that well on Raspberry Pi OS on Pi 4. I don't know why, at the moment. But it runs on Ubuntu. I'm going to leave it at that, for now.
+Update - This does not actually run all that well on Raspberry Pi OS on Pi 4. I don't know why, at the moment. But it runs on Ubuntu. I'm going to leave it at that, for now. This code also runs just fine on Windows. The instructions to install OpenCV on Windows are a little different. I'll track that down.
 
 ### Prerequisites
 sudo apt install python3-opencv
@@ -30,3 +30,5 @@ Check out my [pihomecam](https://github.com/paulrisk3/pihomecam)
   * save footage by camera and date
 * Add sources in README
 * Configure alerts when motion is detected - likely MQTT
+* Add instructions for Windows installation
+* Optimize for Raspberry Pi OS on Pi 4
