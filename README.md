@@ -31,4 +31,5 @@ Check out my [pihomecam](https://github.com/paulrisk3/pihomecam)
 * Add sources in README
 * Configure alerts when motion is detected - likely MQTT
 * Add instructions for Windows installation
+* Fix videos recording too fast on Windows
 * Optimize for Raspberry Pi OS on Pi 4
