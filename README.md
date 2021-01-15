@@ -33,3 +33,4 @@ Check out my [pihomecam](https://github.com/paulrisk3/pihomecam)
 * Add instructions for Windows installation
 * Fix videos recording too fast on Windows
 * Optimize for Raspberry Pi OS on Pi 4
+* Provide web server to view motion captures remotely
