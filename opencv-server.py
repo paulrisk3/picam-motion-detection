@@ -4,6 +4,9 @@ import sys
 import os
 import time
 
+# Boolean to assist with printing debug statements
+camera_connected = False
+
 while True:
     try:
         baseline_image=None
@@ -17,6 +20,10 @@ while True:
 
         while True:
             check, frame = video.read()
+            # If camera was not previously connected, print connected message
+            if camera_connected == False:
+                camera_connected = True
+                print("Connected to " + str(sys.argv[1]))
             motion_status=0
             gray_frame=cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
             gray_frame=cv2.GaussianBlur(gray_frame,(25,25),0)
@@ -53,11 +60,14 @@ while True:
                 video_clip = cv2.VideoWriter(clip_directory + now.strftime("%Y-%m-%d_%H-%M-%S") + '.avi', cv2.VideoWriter_fourcc(*'MJPG'), framerate, size)
                 time_end = record_length + time.time()
                 while time.time() < time_end:
+                    # print(time.time())
                     check, frame = video.read()
                     video_clip.write(frame)
 
         video.release()
     except:
         video.release()
+        # If an error is hit, mark the camera_connected flag as False.
+        camera_connected = False
         print("Retrying connection in 10 seconds...")
         time.sleep(10)
