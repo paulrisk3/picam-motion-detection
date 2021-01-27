@@ -67,6 +67,13 @@ while True:
                     check, frame = video.read()
                     video_clip.write(frame)
 
+            key=cv2.waitKey(1)
+
+            if key==ord('q'):
+                if status==1:
+                    times.append(datetime.datetime.now())
+                break
+
         video.release()
     except:
         video.release()
