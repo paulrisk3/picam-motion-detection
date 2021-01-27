@@ -21,10 +21,6 @@ Check out my [pihomecam](https://github.com/paulrisk3/pihomecam)
 ## To do
 * Auto-detect video framerate - defaults to 30fps
 * Add running timestamp to recording
-* Rebuild motion detection to not require status_list - currently grows larger forever
-  * If current motion_status == 1 and previous motion_status == 0, that's when we trigger motion.
-  * We don't need to keep track of the status *forever*, but we do need the previous and current status. 
-  * That will be easy to replace.
 * Delete footage after defined number of days
 * Add .conf file to register and name cameras
   * save footage by camera and date
@@ -34,3 +30,7 @@ Check out my [pihomecam](https://github.com/paulrisk3/pihomecam)
 * Fix videos recording too fast on Windows
 * Optimize for Raspberry Pi OS on Pi 4
 * Provide web server to view motion captures remotely
+
+## Done
+* Rebuild motion detection to not require status_list
+  * If current motion_status == 1 and previous motion_status == 0, that's when we trigger motion.
