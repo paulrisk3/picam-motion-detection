@@ -48,10 +48,13 @@ while True:
                 motion_status=1
                 (x, y, w, h)=cv2.boundingRect(contour)
                 cv2.rectangle(frame, (x, y), (x+w, y+h), (0,255,0), 1)
-            status_list.append(motion_status)
+            # status_list.append(motion_status)
+            status_list[0] = status_list[1]
+            status_list[1] = motion_status
 
             # If motion is detected, record for record_length seconds
-            if status_list[-1]==1 and status_list[-2]==0:
+            if status_list[1]==1 and status_list[0]==0:
+            # if status_list[-1]==1 and status_list[-2]==0:
                 now = datetime.datetime.now()
                 print("Motion detected at " + str(now))
                 clip_directory = 'clips/' + now.strftime('%Y/%m-%B/%d-%A/') 
