@@ -30,6 +30,7 @@ Check out my [pihomecam](https://github.com/paulrisk3/pihomecam)
 * Fix videos recording too fast on Windows
 * Optimize for Raspberry Pi OS on Pi 4
 * Provide web server to view motion captures remotely
+  * No. Just use Plex.
 
 ## Done
 * Rebuild motion detection to not require status_list
