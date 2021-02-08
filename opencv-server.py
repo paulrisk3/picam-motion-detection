@@ -6,16 +6,7 @@ import time
 import configparser
 from multiprocessing import Process
 
-def start_from_config():
-  config = configparser.ConfigParser()
-  config.read('picam-motion-detection.conf')
-  for key in config:
-    if key != 'DEFAULT':
-      Process(detect_motion(key, config[key]['url'], config[key]['x_resolution'], config[key]['y_resolution'], config[key]['fps'])).start()
-
-#@profile
-#def detect_motion():
-def detect_motion(name, url, x_res, y_res, fps):
+def detect_motion(key):
     # Boolean to assist with printing debug statements
     camera_connected = False
 
@@ -24,13 +15,10 @@ def detect_motion(name, url, x_res, y_res, fps):
             baseline_image=None
             # This status thing just gets bigger and bigger. What's the purpose of keeping track of it outside of the immediate cycle?
             status_list=[None, None]
-            #video=cv2.VideoCapture(sys.argv[1])
-            video=cv2.VideoCapture(url)
+            video=cv2.VideoCapture(config.get(key, 'url'))
             record_length = 10
-            #size = (int(video.get(3)), int(video.get(4)))
-            size = (x_res, y_res)
-            #framerate = 30
-            framerate = fps
+            size = (config.get(key, 'x_resolution'), config.get(key, 'y_resolution'))
+            framerate = config.get(key, 'fps')
             baseline_counter=0
 
             while True:
@@ -38,8 +26,7 @@ def detect_motion(name, url, x_res, y_res, fps):
                 # If camera was not previously connected, print connected message
                 if camera_connected == False:
                     camera_connected = True
-                    #print("Connected to " + str(sys.argv[1]))
-                    print("Connected to " + name)
+                    print("Connected to " + key)
                 motion_status=0
                 gray_frame=cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
                 gray_frame=cv2.GaussianBlur(gray_frame,(25,25),0)
@@ -64,13 +51,11 @@ def detect_motion(name, url, x_res, y_res, fps):
                     motion_status=1
                     (x, y, w, h)=cv2.boundingRect(contour)
                     cv2.rectangle(frame, (x, y), (x+w, y+h), (0,255,0), 1)
-                # status_list.append(motion_status)
                 status_list[0] = status_list[1]
                 status_list[1] = motion_status
 
                 # If motion is detected, record for record_length seconds
                 if status_list[1]==1 and status_list[0]==0:
-                # if status_list[-1]==1 and status_list[-2]==0:
                     now = datetime.datetime.now()
                     print("Motion detected at " + str(now))
                     clip_directory = 'clips/' + now.strftime('%Y/%m-%B/%d-%A/') 
@@ -96,9 +81,15 @@ def detect_motion(name, url, x_res, y_res, fps):
             video.release()
             # If an error is hit, mark the camera_connected flag as False.
             camera_connected = False
-            print("Retrying connection to " + name + " in 10 seconds...")
+            print("Retrying connection to ", key, " in 10 seconds...")
             time.sleep(10)
 
 if __name__ == '__main__':
-    #detect_motion()
-    start_from_config()
+    config = configparser.ConfigParser()
+    config.read('picam-motion-detection.conf')
+    camera_count = len(config.sections())
+    #jobs = []
+    for i in range(camera_count):
+      p = Process(target=detect_motion(config.sections()[i]))
+      #jobs.append(p)
+      p.start()
