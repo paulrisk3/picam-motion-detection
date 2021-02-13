@@ -2,8 +2,7 @@ import configparser
 
 config=configparser.ConfigParser()
 config.read('picam-motion-detection.conf')
-for key in config:
-  #print(config[key]['url'])
+for key in config.sections():
   print(key)
-for key in config['front_yard']:
-  print(key)
+  for key in config[key]:
+    print(key)

@@ -6,7 +6,7 @@ import time
 import configparser
 from multiprocessing import Process
 
-def detect_motion(key):
+def detect_motion(config, key):
     # Boolean to assist with printing debug statements
     camera_connected = False
 
@@ -15,10 +15,10 @@ def detect_motion(key):
             baseline_image=None
             # This status thing just gets bigger and bigger. What's the purpose of keeping track of it outside of the immediate cycle?
             status_list=[None, None]
-            video=cv2.VideoCapture(config.get(key, 'url'))
+            video=cv2.VideoCapture(config[key]['url'])
             record_length = 10
-            size = (config.get(key, 'x_resolution'), config.get(key, 'y_resolution'))
-            framerate = config.get(key, 'fps')
+            size = (config[key]['x_resolution'], config[key]['y_resolution'])
+            framerate = config[key]['fps']
             baseline_counter=0
 
             while True:
@@ -87,9 +87,7 @@ def detect_motion(key):
 if __name__ == '__main__':
     config = configparser.ConfigParser()
     config.read('picam-motion-detection.conf')
-    camera_count = len(config.sections())
-    #jobs = []
-    for i in range(camera_count):
-      p = Process(target=detect_motion(config.sections()[i]))
+    for key in config.sections():
+      p = Process(target=detect_motion(config, key))
       #jobs.append(p)
       p.start()
