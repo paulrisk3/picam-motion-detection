@@ -6,31 +6,25 @@ import time
 import configparser
 from multiprocessing import Process
 
-def detect_motion(config, key):
+def detect_motion(config, camera_name):
     camera_connected = False
-    #For some reason unknown, key drops to -1 after one or two cycles. 
-    #I store key in new_key because key is screwy.
-    new_key = key
 
     while True:
         try:
             baseline_image=None
             status_list=[None, None]
-            video=cv2.VideoCapture(config[new_key]['url'])
+            video=cv2.VideoCapture(config[camera_name]['url'])
             record_length = 10
-            size = (config[new_key]['x_resolution'], config[new_key]['y_resolution'])
-            framerate = config[key]['fps']
+            size=(int(video.get(3)), int(video.get(4)))
+            framerate = config[camera_name]['fps']
             baseline_counter=0
 
             while True:
-                #print(key)
-                #print(new_key)
-                #print(config[new_key]['url'])
                 check, frame = video.read()
                 # If camera was not previously connected, print connected message
                 if camera_connected == False:
                     camera_connected = True
-                    print("Connected to " + new_key)
+                    print("Connected to " + camera_name)
                 motion_status=0
                 gray_frame=cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
                 gray_frame=cv2.GaussianBlur(gray_frame,(25,25),0)
@@ -61,21 +55,27 @@ def detect_motion(config, key):
                 # If motion is detected, record for record_length seconds
                 if status_list[1]==1 and status_list[0]==0:
                     now = datetime.datetime.now()
-                    print("Motion detected from " + new_key + " at " + str(now))
+                    print("Motion detected from " + camera_name + " at " + str(now))
                     clip_directory = 'clips/' + now.strftime('%Y/%m-%B/%d-%A/') 
                     if not os.path.exists(clip_directory):
                         os.makedirs(clip_directory)
                     print("Preparing video clip.")
-                    #The crash happens when motion is detected and it hits this line.
-                    video_clip = cv2.VideoWriter(clip_directory + now.strftime("%Y-%m-%d_%H-%M-%S") + '.avi', cv2.VideoWriter_fourcc(*'MJPG'), framerate, size)
-                    print("Calculating record length.")
-                    time_end = record_length + time.time()
-                    print("Begin writing.")
-                    while time.time() < time_end:
+                    try:
+                      #The crash happens when motion is detected and it hits this line.
+                      print("Directory: ", clip_directory)
+                      print("Framerate: ", framerate)
+                      print("Size: ", size)
+                      video_clip = cv2.VideoWriter(clip_directory + now.strftime("%Y-%m-%d_%H-%M-%S") + '.avi', cv2.VideoWriter_fourcc(*'MJPG'), framerate, size)
+                      print("Calculating record length.")
+                      time_end = record_length + time.time()
+                      print("Begin writing.")
+                      while time.time() < time_end:
                         # print(time.time())
                         check, frame = video.read()
                         video_clip.write(frame)
-                    video_clip.release()
+                      video_clip.release()
+                    except Exception as e:
+                      print(e)
 
                 key=cv2.waitKey(1)
 
@@ -89,15 +89,15 @@ def detect_motion(config, key):
             video.release()
             # If an error is hit, mark the camera_connected flag as False.
             camera_connected = False
-            print("Retrying connection to ", new_key, " in 10 seconds...")
+            print("Retrying connection to ", camera_name, " in 10 seconds...")
             time.sleep(10)
 
 if __name__ == '__main__':
     config = configparser.ConfigParser()
     config.read('picam-motion-detection.conf')
     jobs=[]
-    for key in config.sections():
-      p = Process(target=detect_motion, args=[config, key])
+    for camera_name in config.sections():
+      p = Process(target=detect_motion, args=[config, camera_name])
       jobs.append(p)
       p.start()
     #for p in jobs:
