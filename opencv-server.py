@@ -7,7 +7,6 @@ import configparser
 from multiprocessing import Process
 
 def detect_motion(config, key):
-    # Boolean to assist with printing debug statements
     camera_connected = False
 
     while True:
