@@ -14,9 +14,9 @@ def detect_motion(config, camera_name):
             baseline_image=None
             status_list=[None, None]
             video=cv2.VideoCapture(config[camera_name]['url'])
-            record_length = 10
+            record_length = int(config[camera_name]['record_length'])
             size=(int(video.get(3)), int(video.get(4)))
-            framerate = config[camera_name]['fps']
+            framerate = int(config[camera_name]['fps'])
             baseline_counter=0
 
             while True:
@@ -56,21 +56,13 @@ def detect_motion(config, camera_name):
                 if status_list[1]==1 and status_list[0]==0:
                     now = datetime.datetime.now()
                     print("Motion detected from " + camera_name + " at " + str(now))
-                    clip_directory = 'clips/' + now.strftime('%Y/%m-%B/%d-%A/') 
+                    clip_directory = 'clips/' + now.strftime('%Y/%m-%B/%d-%A/') + camera_name + '/'
                     if not os.path.exists(clip_directory):
                         os.makedirs(clip_directory)
-                    print("Preparing video clip.")
                     try:
-                      #The crash happens when motion is detected and it hits this line.
-                      print("Directory: ", clip_directory)
-                      print("Framerate: ", framerate)
-                      print("Size: ", size)
                       video_clip = cv2.VideoWriter(clip_directory + now.strftime("%Y-%m-%d_%H-%M-%S") + '.avi', cv2.VideoWriter_fourcc(*'MJPG'), framerate, size)
-                      print("Calculating record length.")
                       time_end = record_length + time.time()
-                      print("Begin writing.")
                       while time.time() < time_end:
-                        # print(time.time())
                         check, frame = video.read()
                         video_clip.write(frame)
                       video_clip.release()
@@ -100,5 +92,5 @@ if __name__ == '__main__':
       p = Process(target=detect_motion, args=[config, camera_name])
       jobs.append(p)
       p.start()
-    #for p in jobs:
-      #p.join()
+    for p in jobs:
+      p.join()
