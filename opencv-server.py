@@ -8,6 +8,8 @@ from multiprocessing import Process
 
 def detect_motion(config, key):
     camera_connected = False
+    #For some reason unknown, key drops to -1 after one or two cycles. 
+    #I store key in new_key because key is screwy.
     new_key = key
 
     while True:
@@ -21,9 +23,9 @@ def detect_motion(config, key):
             baseline_counter=0
 
             while True:
-                print(key)
-                print(new_key)
-                print(config[new_key]['url'])
+                #print(key)
+                #print(new_key)
+                #print(config[new_key]['url'])
                 check, frame = video.read()
                 # If camera was not previously connected, print connected message
                 if camera_connected == False:
@@ -63,8 +65,12 @@ def detect_motion(config, key):
                     clip_directory = 'clips/' + now.strftime('%Y/%m-%B/%d-%A/') 
                     if not os.path.exists(clip_directory):
                         os.makedirs(clip_directory)
+                    print("Preparing video clip.")
+                    #The crash happens when motion is detected and it hits this line.
                     video_clip = cv2.VideoWriter(clip_directory + now.strftime("%Y-%m-%d_%H-%M-%S") + '.avi', cv2.VideoWriter_fourcc(*'MJPG'), framerate, size)
+                    print("Calculating record length.")
                     time_end = record_length + time.time()
+                    print("Begin writing.")
                     while time.time() < time_end:
                         # print(time.time())
                         check, frame = video.read()
@@ -94,5 +100,5 @@ if __name__ == '__main__':
       p = Process(target=detect_motion, args=[config, key])
       jobs.append(p)
       p.start()
-    for p in jobs:
-      p.join()
+    #for p in jobs:
+      #p.join()
