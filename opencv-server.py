@@ -13,7 +13,6 @@ def detect_motion(config, key):
     while True:
         try:
             baseline_image=None
-            # This status thing just gets bigger and bigger. What's the purpose of keeping track of it outside of the immediate cycle?
             status_list=[None, None]
             video=cv2.VideoCapture(config[key]['url'])
             record_length = 10
