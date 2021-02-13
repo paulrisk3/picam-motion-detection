@@ -60,12 +60,15 @@ while True:
                 clip_directory = 'clips/' + now.strftime('%Y/%m-%B/%d-%A/') 
                 if not os.path.exists(clip_directory):
                     os.makedirs(clip_directory)
-                video_clip = cv2.VideoWriter(clip_directory + now.strftime("%Y-%m-%d_%H-%M-%S") + '.avi', cv2.VideoWriter_fourcc(*'MJPG'), framerate, size)
-                time_end = record_length + time.time()
-                while time.time() < time_end:
+                try:
+                  video_clip = cv2.VideoWriter(clip_directory + now.strftime("%Y-%m-%d_%H-%M-%S") + '.avi', cv2.VideoWriter_fourcc(*'MJPG'), framerate, size)
+                  time_end = record_length + time.time()
+                  while time.time() < time_end:
                     # print(time.time())
                     check, frame = video.read()
                     video_clip.write(frame)
+                except Exception as e:
+                  print(e)
 
             key=cv2.waitKey(1)
 
