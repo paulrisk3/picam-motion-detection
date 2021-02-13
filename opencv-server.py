@@ -8,23 +8,27 @@ from multiprocessing import Process
 
 def detect_motion(config, key):
     camera_connected = False
+    new_key = key
 
     while True:
         try:
             baseline_image=None
             status_list=[None, None]
-            video=cv2.VideoCapture(config[key]['url'])
+            video=cv2.VideoCapture(config[new_key]['url'])
             record_length = 10
-            size = (config[key]['x_resolution'], config[key]['y_resolution'])
+            size = (config[new_key]['x_resolution'], config[new_key]['y_resolution'])
             framerate = config[key]['fps']
             baseline_counter=0
 
             while True:
+                print(key)
+                print(new_key)
+                print(config[new_key]['url'])
                 check, frame = video.read()
                 # If camera was not previously connected, print connected message
                 if camera_connected == False:
                     camera_connected = True
-                    print("Connected to " + key)
+                    print("Connected to " + new_key)
                 motion_status=0
                 gray_frame=cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
                 gray_frame=cv2.GaussianBlur(gray_frame,(25,25),0)
@@ -55,7 +59,7 @@ def detect_motion(config, key):
                 # If motion is detected, record for record_length seconds
                 if status_list[1]==1 and status_list[0]==0:
                     now = datetime.datetime.now()
-                    print("Motion detected from " + key + " at " + str(now))
+                    print("Motion detected from " + new_key + " at " + str(now))
                     clip_directory = 'clips/' + now.strftime('%Y/%m-%B/%d-%A/') 
                     if not os.path.exists(clip_directory):
                         os.makedirs(clip_directory)
@@ -79,7 +83,7 @@ def detect_motion(config, key):
             video.release()
             # If an error is hit, mark the camera_connected flag as False.
             camera_connected = False
-            print("Retrying connection to ", key, " in 10 seconds...")
+            print("Retrying connection to ", new_key, " in 10 seconds...")
             time.sleep(10)
 
 if __name__ == '__main__':
