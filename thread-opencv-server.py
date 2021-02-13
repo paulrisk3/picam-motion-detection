@@ -4,7 +4,8 @@ import sys
 import os
 import time
 import configparser
-from multiprocessing import Process
+#from multiprocessing import Process
+import threading
 
 def detect_motion(config, key):
     camera_connected = False
@@ -55,7 +56,7 @@ def detect_motion(config, key):
                 # If motion is detected, record for record_length seconds
                 if status_list[1]==1 and status_list[0]==0:
                     now = datetime.datetime.now()
-                    print("Motion detected from " + key + " at " + str(now))
+                    print("Motion detected at " + str(now))
                     clip_directory = 'clips/' + now.strftime('%Y/%m-%B/%d-%A/') 
                     if not os.path.exists(clip_directory):
                         os.makedirs(clip_directory)
@@ -85,10 +86,14 @@ def detect_motion(config, key):
 if __name__ == '__main__':
     config = configparser.ConfigParser()
     config.read('picam-motion-detection.conf')
-    jobs=[]
+    #jobs=[]
     for key in config.sections():
-      p = Process(target=detect_motion, args=[config, key])
-      jobs.append(p)
-      p.start()
-    for p in jobs:
-      p.join()
+      try:
+        threading.Thread(target=detect_motion, args=(config, key)).start()
+      except:
+        print("Unable to start thread.")
+      #p = Process(target=detect_motion, args=[config, key])
+      #jobs.append(p)
+      #p.start()
+    #for p in jobs:
+      #p.join()
