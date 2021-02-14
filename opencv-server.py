@@ -14,7 +14,7 @@ def detect_motion(config, camera_name):
             baseline_image=None
             status_list=[None, None]
             video=cv2.VideoCapture(config[camera_name]['url'])
-            record_length = int(config[camera_name]['record_length'])
+            record_length = int(config[camera_name]['record_time'])
             size=(int(video.get(3)), int(video.get(4)))
             framerate = int(config[camera_name]['fps'])
             baseline_counter=0
@@ -24,7 +24,7 @@ def detect_motion(config, camera_name):
                 # If camera was not previously connected, print connected message
                 if camera_connected == False:
                     camera_connected = True
-                    print("Connected to " + camera_name)
+                    print("Connected to ", camera_name)
                 motion_status=0
                 gray_frame=cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
                 gray_frame=cv2.GaussianBlur(gray_frame,(25,25),0)
@@ -81,8 +81,8 @@ def detect_motion(config, camera_name):
             video.release()
             # If an error is hit, mark the camera_connected flag as False.
             camera_connected = False
-            print("Retrying connection to ", camera_name, " in 10 seconds...")
-            time.sleep(10)
+            print("Retrying connection to ",camera_name," in ",config[camera_name]['reconnect_time'], " seconds...")
+            time.sleep(int(config[camera_name]['reconnect_time']))
 
 if __name__ == '__main__':
     config = configparser.ConfigParser()
