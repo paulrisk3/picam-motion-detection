@@ -18,15 +18,19 @@ python3 opencv_server.py `<IP Camera URL>`
 ### Need an IP Camera?
 Check out my [pihomecam](https://github.com/paulrisk3/pihomecam)
 
+## Acknowledgements
+Props to Arindom Bhattacharjee at [towards data science](https://towardsdatascience.com/build-a-motion-triggered-alarm-in-5-minutes-342fbe3d5396) for teaching me how to use OpenCV for Python. Much of my code is taken from their blog post.
+
 ## To do
 * Auto-detect video framerate - defaults to 30fps
 * Add running timestamp to recording
 * Delete footage after defined number of days
-* Add sources in README
 * Configure alerts when motion is detected - likely MQTT
 * Add instructions for Windows installation
 * Fix videos recording too fast on Windows
+  * Working on it.
 * Optimize for Raspberry Pi OS on Pi 4
+  * That's not going to happen any time soon. The OpenCV library does **not** like Pi.
 * Provide web server to view motion captures remotely
   * No. Just use Plex.
 
@@ -35,3 +39,4 @@ Check out my [pihomecam](https://github.com/paulrisk3/pihomecam)
   * If current motion_status == 1 and previous motion_status == 0, that's when we trigger motion.
 * Add .conf file to register and name cameras
   * Save footage by camera and date
+* Add sources in README
