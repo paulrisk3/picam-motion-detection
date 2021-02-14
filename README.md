@@ -37,6 +37,7 @@ Props to Arindom Bhattacharjee at [towards data science](https://towardsdatascie
   * Working on it.
 * Optimize for Raspberry Pi OS on Pi 4
   * That's not going to happen any time soon. The OpenCV library does **not** like Pi.
+  * I wonder if Ubuntu for Pi would work better, but I think it's an ARM thing.
 * Provide web server to view motion captures remotely
   * No. Just use Plex.
 
