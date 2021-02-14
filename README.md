@@ -9,18 +9,20 @@ A note for the Raspberry Pi users out there - OpenCV for Python doesn't run well
 ### Prerequisites
 
 #### Install Python 3
-Linux: You've probably already got it. `python --version`
-Windows: [Python Releases for Windows](https://www.python.org/downloads/windows/)
+* Linux: You've probably already got it. `python --version`
+* Windows: [Python Releases for Windows](https://www.python.org/downloads/windows/)
 
 #### Install OpenCV for Python
-Linux: sudo apt install python3-opencv
-Windows: pip install opencv-python
+* Linux: sudo apt install python3-opencv
+* Windows: pip install opencv-python
 
 ### Installation
 git clone https://github.com/paulrisk3/picam-motion-detection.git
 
 ## Usage
-python3 opencv_server.py `<IP Camera URL>`
+The motion detection script reads from picam-motion-detection.conf to find the names and URLs for your IP cameras. A sample file is provided in the repo. You should edit that file directly, replacing the names in [brackets] with your desired camera names, and the url variable with the URL for the corresponding IP camera. If you're using my [pihomecam](https://github.com/paulrisk3/pihomecam), then you should leave the fps at 30.  
+
+python3 opencv_server.py
 
 ### Need an IP Camera?
 Check out my [pihomecam](https://github.com/paulrisk3/pihomecam)
