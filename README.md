@@ -7,7 +7,7 @@ I've got this running in Ubuntu 20.04 on a dual-core, hyper-threaded i3-2120 @ 3
 A note for the Raspberry Pi users out there - OpenCV for Python doesn't run well on Pi. If you're a mage, you can install it properly and then maybe get this script running. I don't have emotional time for that.
 
 ### Prerequisites
-Check out my [pihomecam](https://github.com/paulrisk3/pihomecam)
+Need an IP camera? Check out my [pihomecam](http://riskiot.dev/2021/02/11/raspberry-pi-zero-w-ip-camera/)
 
 #### Install Python 3
 * Linux: You've probably already got it. `python --version`
