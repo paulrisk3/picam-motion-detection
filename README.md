@@ -2,12 +2,19 @@
 Motion detection and recording from IP camera using Python and OpenCV
 
 ## Getting Started
-This script will probably run comfortably on a Pi 4 but would likely strain a Pi 3. I've got it running in Ubuntu 20.04 on a dual-core, hyper-threaded i3-2120 @ 3.30GHz with 12GB DDR3 RAM at about 30% CPU utilization and 200 MB of RAM.
+I've got this running in Ubuntu 20.04 on a dual-core, hyper-threaded i3-2120 @ 3.30GHz with 12GB DDR3 RAM at about 30% CPU utilization and 200 MB of RAM. It also runs on Windows. All you need are Python 3, the OpenCV Python library, and the opencv-server.py script provided in this repository.
 
-Update - This does not actually run all that well on Raspberry Pi OS on Pi 4. I don't know why, at the moment. But it runs on Ubuntu. I'm going to leave it at that, for now. This code also runs just fine on Windows. The instructions to install OpenCV on Windows are a little different. I'll track that down.
+A note for the Raspberry Pi users out there - OpenCV for Python doesn't run well on Pi. If you're a mage, you can install it properly and then maybe get this script running. I don't have emotional time for that.
 
 ### Prerequisites
-sudo apt install python3-opencv
+
+#### Install Python 3
+Linux: You've probably already got it. `python --version`
+Windows: [Python Releases for Windows](https://www.python.org/downloads/windows/)
+
+#### Install OpenCV for Python
+Linux: sudo apt install python3-opencv
+Windows: pip install opencv-python
 
 ### Installation
 git clone https://github.com/paulrisk3/picam-motion-detection.git
@@ -26,7 +33,6 @@ Props to Arindom Bhattacharjee at [towards data science](https://towardsdatascie
 * Add running timestamp to recording
 * Delete footage after defined number of days
 * Configure alerts when motion is detected - likely MQTT
-* Add instructions for Windows installation
 * Fix videos recording too fast on Windows
   * Working on it.
 * Optimize for Raspberry Pi OS on Pi 4
@@ -40,3 +46,4 @@ Props to Arindom Bhattacharjee at [towards data science](https://towardsdatascie
 * Add .conf file to register and name cameras
   * Save footage by camera and date
 * Add sources in README
+* Add instructions for Windows installation
