@@ -22,8 +22,6 @@ Check out my [pihomecam](https://github.com/paulrisk3/pihomecam)
 * Auto-detect video framerate - defaults to 30fps
 * Add running timestamp to recording
 * Delete footage after defined number of days
-* Add .conf file to register and name cameras
-  * save footage by camera and date
 * Add sources in README
 * Configure alerts when motion is detected - likely MQTT
 * Add instructions for Windows installation
@@ -35,3 +33,5 @@ Check out my [pihomecam](https://github.com/paulrisk3/pihomecam)
 ## Done
 * Rebuild motion detection to not require status_list
   * If current motion_status == 1 and previous motion_status == 0, that's when we trigger motion.
+* Add .conf file to register and name cameras
+  * Save footage by camera and date
